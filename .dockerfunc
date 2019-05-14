@@ -68,8 +68,22 @@ latexmk(){
 	local rfile
 	rfile=$(readlink -m "${rdir}/$(basename "$file")")
 
-	docker run --rm \
+	docker run --rm          \
 		-v "${ldir}:${rdir}" \
-		--name latexmk \
+		--name latexmk       \
 		${DOCKER_REPO_PREFIX}/latexmk "${args}" "${rfile}"
+}
+
+latexindent(){
+	local file=${*: -1}
+	local lfile
+	lfile=$(readlink -m "$(pwd)/${file}")
+	local rfile
+	rfile=$(readlink -m "/$(basename "$file")")
+	local args=${*:1:${#@}-1}
+
+	docker run --rm \
+		-v "${lfile}:${rfile}" \
+		--name latexindent \
+		${DOCKER_REPO_PREFIX}/latexindent "${args}" "${rfile}"
 }
