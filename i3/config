@@ -4,7 +4,6 @@ floating_modifier $mod
 bindsym $mod+Return exec terminator
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec dmenu_run
-#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+j focus left
 bindsym $mod+k focus down
 bindsym $mod+l exec "~/bin/fuzzy_lock.sh"
@@ -81,6 +80,9 @@ bar {
 }
 
 hide_edge_borders both
+
+focus_follows_mouse yes
+
 exec --no-startup-id i3-msg 'workspace 1; exec slack'
 exec --no-startup-id i3-msg 'workspace 1; exec thunderbird'
 exec --no-startup-id i3-msg 'workspace 2; exec firefox'
