@@ -74,6 +74,37 @@ latexmk(){
 		${DOCKER_REPO_PREFIX}/latexmk "${args}" "${rfile}"
 }
 
+detex(){
+    # Get filename.
+	local file=${*: -1}
+
+    # Get absolute path to file.
+	local lfile
+	lfile=$(readlink -m "$(pwd)/${file}")
+
+    # Local dir.
+    local ldir 
+    ldir=$(dirname "$lfile")
+
+    #Args
+	local args=${*:1:${#@}-1}
+    
+    echo "Args: $args"
+
+    # Remote dir.
+    local rdir="/tmp/"
+
+    # Remote file path.
+	local rfile
+	rfile=$(readlink -m "${rdir}/$(basename "$file")")
+
+	docker run --rm          \
+		-v "${ldir}:${rdir}" \
+		--name detex       \
+		${DOCKER_REPO_PREFIX}/detex "${args}" "${rfile}"
+}
+
+
 latexindent(){
 	local file=${*: -1}
 	local lfile
