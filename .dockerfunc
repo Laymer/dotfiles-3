@@ -58,8 +58,6 @@ latexmk(){
 
     #Args
 	local args=${*:1:${#@}-1}
-    
-    echo "Args: $args"
 
     # Remote dir.
     local rdir="/tmp/"
@@ -86,11 +84,6 @@ detex(){
     local ldir 
     ldir=$(dirname "$lfile")
 
-    #Args
-	local args=${*:1:${#@}-1}
-    
-    echo "Args: $args"
-
     # Remote dir.
     local rdir="/tmp/"
 
@@ -101,7 +94,7 @@ detex(){
 	docker run --rm          \
 		-v "${ldir}:${rdir}" \
 		--name detex       \
-		${DOCKER_REPO_PREFIX}/detex "${args}" "${rfile}"
+		${DOCKER_REPO_PREFIX}/detex "${rfile}"
 }
 
 
