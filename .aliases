@@ -118,7 +118,7 @@ alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v exten
 alias afk="i3lock -c 000000"
 
 # vhosts
-alias hosts='sudo vim /etc/hosts'
+alias hosts='sudo emacs -nw /etc/hosts'
 
 # copy working directory
 alias cwd='pwd | tr -d "\r\n" | xclip -selection clipboard'
