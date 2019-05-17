@@ -99,15 +99,14 @@ detex(){
 
 
 latexindent(){
-	local file=${*: -1}
+	local pars=("$@")
+	local file="${pars[${#pars[@]}-1]}"
+	local flags=("${pars[@]:0:${#pars[@]}-1}")
 	local lfile
 	lfile=$(readlink -m "$(pwd)/${file}")
-	local rfile
 	rfile=$(readlink -m "/$(basename "$file")")
-	local args=${*:1:${#@}-1}
-
 	docker run --rm \
 		-v "${lfile}:${rfile}" \
 		--name latexindent \
-		${DOCKER_REPO_PREFIX}/latexindent "${args}" "${rfile}"
+		${DOCKER_REPO_PREFIX}/latexindent "${flags[@]}" "${rfile}"
 }
