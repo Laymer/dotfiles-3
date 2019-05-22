@@ -43,26 +43,38 @@ relies_on(){
 	done
 }
 
+asciidoctor(){
+	local pars=("$@")
+	local file="${pars[${#pars[@]}-1]}"
+	local flags=("${pars[@]:0:${#pars[@]}-1}")
 
-latexmk(){
-    # Get filename.
-	local file=${*: -1}
-
-    # Get absolute path to file.
 	local lfile
 	lfile=$(readlink -m "$(pwd)/${file}")
 
-    # Local dir.
+	local ldir
+	ldir=$(dirname "$lfile")
+
+	local rdir
+	rdir="/tmp/"
+
+	local rfile 
+	rfile=$(readlink -m "${rdir}/$(basename "$file")")
+
+	docker run --rm          \
+		-v "${ldir}:${rdir}" \
+		-u "$(id -u)"\
+		--name asciidoctor   \
+		${DOCKER_REPO_PREFIX}/asciidoctor "${flags[@]}" "${rfile}"
+}
+
+latexmk(){
+	local file=${*: -1}
+	local lfile
+	lfile=$(readlink -m "$(pwd)/${file}")
     local ldir 
     ldir=$(dirname "$lfile")
-
-    #Args
 	local args=${*:1:${#@}-1}
-
-    # Remote dir.
     local rdir="/tmp/"
-
-    # Remote file path.
 	local rfile
 	rfile=$(readlink -m "${rdir}/$(basename "$file")")
 
