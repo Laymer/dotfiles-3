@@ -28,3 +28,6 @@ if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]]; then
 	GPG_TTY=$(tty)
 	export GPG_TTY
 fi
+
+# Remember Elixir history.
+export ERL_AFLAGS="-kernel shell_history enabled"
