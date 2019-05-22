@@ -43,6 +43,30 @@ relies_on(){
 	done
 }
 
+pandoc(){
+	local pars=("$@")
+	local file="${pars[${#pars[@]}-1]}"
+	local flags=("${pars[@]:0:${#pars[@]}-1}")
+
+	local lfile
+	lfile=$(readlink -m "$(pwd)/${file}")
+
+	local ldir
+	ldir=$(dirname "$lfile")
+
+	local rdir
+	rdir="/tmp/"
+
+	local rfile 
+	rfile=$(readlink -m "${rdir}/$(basename "$file")")
+
+	docker run --rm          \
+		-v "${ldir}:${rdir}" \
+		-u "$(id -u)"\
+		--name pandoc   \
+		${DOCKER_REPO_PREFIX}/pandoc "${flags[@]}" "${rfile}"
+}
+
 asciidoctor(){
 	local pars=("$@")
 	local file="${pars[${#pars[@]}-1]}"
