@@ -49,21 +49,19 @@ pandoc(){
 	local flags=("${pars[@]:0:${#pars[@]}-1}")
 
 	local lfile
-	lfile=$(readlink -m "$(pwd)/${file}")
-
+	lfile=$(readlink -m "${file}")
 	local ldir
-	ldir=$(dirname "$lfile")
-
+	ldir=$(pwd)
 	local rdir
-	rdir="/tmp/"
-
+	rdir="/data/"
 	local rfile 
-	rfile=$(readlink -m "${rdir}/$(basename "$file")")
+	rfile=$(readlink -m "/$(basename "$file")")
 
-	docker run --rm          \
-		-v "${ldir}:${rdir}" \
-		-u "$(id -u)"\
-		--name pandoc   \
+	docker run --rm            \
+		-v "${ldir}:${rdir}"   \
+		-v "${lfile}:${rfile}" \
+		-u "$(id -u)"          \
+		--name pandoc          \
 		${DOCKER_REPO_PREFIX}/pandoc "${flags[@]}" "${rfile}"
 }
 
