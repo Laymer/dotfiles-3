@@ -90,3 +90,4 @@ exec --no-startup-id owncloud
 
 exec_always --no-startup-id /home/christophe/bin/mouse.sh
 exec_always --no-startup-id /home/christophe/bin/remote.sh
+exec --no-startup-id feh --bg-fill ${HOME}/wallpaper.jpg

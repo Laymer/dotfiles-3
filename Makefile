@@ -22,6 +22,8 @@ dotfiles:
 		sudo ln -snf /usr/bin/pinentry /usr/local/bin/pinentry; \
 	fi;
 
+	ln -snf $(CURDIR)/wallpaper.jpg $(HOME)/wallpaper.jpg
+
 .PHONY: test
 test: shellcheck ## Runs all the tests on the files in the repository.
 
