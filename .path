@@ -1,0 +1,5 @@
+# Ruby path Debian
+export PATH=/home/christophe/.gem/ruby/2.3.0/bin:${PATH}
+
+# Go Home 
+export PATH=export PATH=$PATH:/usr/local/go/bin:${PATH}

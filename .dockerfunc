@@ -144,3 +144,27 @@ latexindent(){
 		--name latexindent \
 		${DOCKER_REPO_PREFIX}/latexindent "${flags[@]}" "${rfile}"
 }
+
+jekyll(){
+	local pars=("$@")
+	local file="${pars[${#pars[@]}-1]}"
+	local flags=("${pars[@]:0:${#pars[@]}-1}")
+
+	local lfile
+	lfile=$(readlink -m "$(pwd)/${file}")
+
+	local ldir
+	ldir=$(dirname "$lfile")
+
+	local rdir
+	rdir="/tmp/"
+
+	local rfile 
+	rfile=$(readlink -m "${rdir}/$(basename "$file")")
+
+	docker run --rm          \
+		-v "${ldir}:${rdir}" \
+		-u "$(id -u)"\
+		--name jekyll   \
+		${DOCKER_REPO_PREFIX}/jekyll "${flags[@]}" "${rfile}"
+}
